@@ -51,7 +51,7 @@ const formatCurrentWeather = (data) => {
 const formatForecastWeather = (data) => {
     // console.log(data);
     let { timezone, daily, hourly } = data;
-    daily = daily.map((d) => {
+    daily = daily.slice(0, daily.length - 1).map((d) => {
         return {
             title: formatToLocalTime(d.dt, timezone, 'ccc'),
             temp: d.temp.day,
