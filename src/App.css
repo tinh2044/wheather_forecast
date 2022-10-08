@@ -11,3 +11,7 @@ html {
 .highcharts-title {
     display: none;
 }
+
+.highcharts-credits {
+    display: none;
+}
