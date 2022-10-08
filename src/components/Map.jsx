@@ -65,6 +65,7 @@ function Map({ countryId, colorMap, typeTemp, threshold }) {
         if (mapData && Object.keys(mapData).length) {
             const fakeData = mapData.features.map((feature, index) => {
                 let fakeTemp;
+                console.log(feature);
                 if (threshold) {
                     fakeTemp = Math.floor(Math.random() * 17) + 2;
                 } else {
