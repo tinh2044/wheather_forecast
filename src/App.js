@@ -3,14 +3,22 @@ import { toast, ToastContainer } from 'react-toastify';
 import './App.css';
 import Forecast from './components/Forecast';
 import Inputs from './components/Inputs';
+import Map from './components/Map';
 import TemperatureAndDetails from './components/TempreatureAndDetails';
 import TimeAndLocaTion from './components/TimeAndLocaTion';
 import TopButtons from './components/TopButtons';
 import getFormattedWeatherData from './services/weatherServices';
 function App() {
-    const [query, setQuery] = useState({ q: 'ho chi minh' });
+    const [query, setQuery] = useState({ q: 'ha noi' });
     const [units, setUnit] = useState('metric');
     const [weather, setWeather] = useState(null);
+    const [colorMap, setColorMap] = useState([
+        [0.2, '#fdba74'],
+        [0.4, '#fb923c'],
+        [0.6, '#f97316'],
+        [0.8, '#ea580c'],
+        [1, '#c2410c'],
+    ]);
     let typeTemp = units === 'metric' ? 'C' : 'F';
     const formatToast = (value) => {
         const listValue = value.split(' ');
@@ -30,10 +38,20 @@ function App() {
         };
         fetchWeather();
     }, [query, units]);
+
     const formatBackground = () => {
         if (!weather) return 'from-cyan-700 to-blue-700';
         const threshold = units === 'metric' ? 20 : 60;
-        if (weather.temp <= threshold) return 'from-cyan-700 to-blue-700';
+        if (weather.temp <= threshold) {
+            setColorMap([
+                [0.2, '#93c5fd'],
+                [0.4, '#60a5fa'],
+                [0.6, '#3b82f6'],
+                [0.8, '#2563eb'],
+                [1, '#1d4ed8'],
+            ]);
+            return 'from-cyan-700 to-blue-700';
+        }
 
         return 'from-yellow-700 to-orange-700';
     };
@@ -44,7 +62,12 @@ function App() {
             <div className="w-5/12 flex flex-col justify-start items-center">
                 <TopButtons setQuery={setQuery} />
                 <Inputs setUnit={setUnit} setQuery={setQuery} />
-                {weather && <TimeAndLocaTion weather={weather} />}
+                {weather && (
+                    <>
+                        <TimeAndLocaTion weather={weather} />
+                        <Map colorMap={colorMap} countryId={weather.country.toLowerCase()} />
+                    </>
+                )}
             </div>
             <div className="w-6/12">
                 {weather && (
