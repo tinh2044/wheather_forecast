@@ -7,16 +7,16 @@ function TemperatureAndDetails({
 }) {
     return (
         <div>
-            <div className="flex items-center justify-center  my-3  text-xl text-cyan-300 font-light">
-                <p>{details}</p>
+            <div className={`flex items-center justify-center  my-3  text-xl  font-light`}>
+                <p className={`${temp < 20 ? 'text-cyan-300' : 'text-yellow-100'}`}>{details}</p>
             </div>
             <div className="flex flex-row items-center justify-between text-white">
-                <img src={iconUrlFromCode(icon)} alt="" className="w-20" />
+                <img src={iconUrlFromCode(icon)} alt="" className="w-32" />
                 <p className="text-5xl">{`${temp.toFixed()}°${typeTemp}`}</p>
                 <div className="flex flex-col items-start space-y-2">
                     <div className="flex font-light text-sm items-center">
                         <UilTemperature size={18} className="mr-1" />
-                        Real fell:
+                        Real feel:
                         <span className="font-medium ml-1">{`${feels_like.toFixed()}°${typeTemp}`}</span>
                     </div>
 

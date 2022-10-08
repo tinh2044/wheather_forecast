@@ -39,30 +39,36 @@ const cities = [
     },
     {
         id: 10,
-        title: 'Bangkok',
+        title: 'Seoul',
     },
     {
         id: 11,
         title: 'Moscow',
     },
     {
-        id: 11,
-        title: 'Hong Kong',
+        id: 10,
+        title: 'Ottawa',
     },
     {
-        id: 12,
+        id: 13,
         title: 'Chicago',
+    },
+    {
+        id: 14,
+        title: 'Canberra',
     },
 ];
 function TopButtons({ setQuery, weather }) {
-    const [listCities, setListCities] = useState(cities.slice(0, 5));
+    const [listCities, setListCities] = useState(cities.slice(0, 4));
     useEffect(() => {
         setListCities((prev) => {
+            console.log(prev);
             let newList = [];
             let index;
             while (newList.length < 5) {
                 index = Math.floor(Math.random() * cities.length);
                 if (!newList.includes(cities[index]) && !prev.includes(cities[index])) {
+                    // console.log(newList);
                     newList.push(cities[index]);
                 }
             }

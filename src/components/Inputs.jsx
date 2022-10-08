@@ -32,14 +32,14 @@ function Inputs({ setQuery, setUnit }) {
         }
     };
     return (
-        <div className="flex flex-row justify-between my-3 w-full">
+        <div className="flex flex-row justify-between mt-3 w-full">
             <div className="flex flex-row w-3/4 items-center justify-center space-x-4 ">
                 <input
                     value={valueInput}
                     ref={inputRef}
                     type="text"
                     placeholder="Search..."
-                    className="text-xl font-light p-2 w-full shadow-xl  focus:outline-none capitalize
+                    className="text-xl font-light p-2 w-full shadow-xl  focus:outline-none capitalize rounded
         "
                     onChange={(e) => setValueInput(e.target.value)}
                 />

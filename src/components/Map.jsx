@@ -4,7 +4,6 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import highchartsMap from 'highcharts/modules/map';
 import { cloneDeep } from 'lodash';
-import { getTemperature } from '../services/weatherServices';
 
 highchartsMap(Highcharts);
 
@@ -23,7 +22,7 @@ const initOptions = (colorMap, typeTemp) => {
             },
         },
         mapNavigation: {
-            enabled: true,
+            enabled: false,
         },
         colorAxis: {
             min: 0,
@@ -53,6 +52,7 @@ const initOptions = (colorMap, typeTemp) => {
             },
         ],
         tooltip: {
+            borderWidth: '2px',
             valueSuffix: `°${typeTemp}`,
         },
     };

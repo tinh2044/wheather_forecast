@@ -23,7 +23,6 @@ function App() {
     useEffect(() => {
         const fetchWeather = async () => {
             const message = query.q ? formatToast(query.q) : 'current location.';
-
             toast.info('Fetching weather for ' + message);
             const data = await getFormattedWeatherData({ ...query, units });
             toast.success(`Successfully fetched weather for ${data.name}, ${data.country}.`);
@@ -41,7 +40,7 @@ function App() {
         }
 
         return 'from-yellow-700 to-orange-700';
-    }, [weather, units]);
+    }, [weather, threshold]);
     return (
         <div
             className={`mx-auto flex flex-row w-full h-screen  justify-between px-10 bg-gradient-to-br from-cyan-700 to-blue-700 shadow-xl shadow-gray-400 ${formatBackground()}`}
