@@ -46,7 +46,7 @@ const cities = [
         title: 'Moscow',
     },
     {
-        id: 10,
+        id: 12,
         title: 'Ottawa',
     },
     {
@@ -62,7 +62,6 @@ function TopButtons({ setQuery, weather }) {
     const [listCities, setListCities] = useState(cities.slice(0, 4));
     useEffect(() => {
         setListCities((prev) => {
-            console.log(prev);
             let newList = [];
             let index;
             while (newList.length < 5) {

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import { getMapDataByCountryId } from '../services/getMapByCountyId';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
@@ -7,7 +7,7 @@ import { cloneDeep } from 'lodash';
 
 highchartsMap(Highcharts);
 
-const initOptions = (colorMap, typeTemp) => {
+const initOptions = (typeTemp) => {
     return {
         chart: {
             width: '400',
@@ -58,7 +58,7 @@ const initOptions = (colorMap, typeTemp) => {
     };
 };
 
-function Map({ colorMap, typeTemp, countryId }) {
+function Map({ typeTemp, countryId }) {
     const [mapData, setMapData] = useState({});
     const [options, setOptions] = useState({});
     const [mapLoaded, setMapLoaded] = useState(false);
@@ -74,7 +74,7 @@ function Map({ colorMap, typeTemp, countryId }) {
     }, [countryId]);
     useEffect(() => {
         if (mapData && Object.keys(mapData).length) {
-            const fakeData = mapData.features.map((feature, index) => {
+            const fakeData = mapData.features.map((feature) => {
                 let temp = Math.floor(Math.random() * 30) + 4;
                 temp = typeTemp === 'F' ? temp * 1.8 + 32 : temp;
                 return {
@@ -83,13 +83,13 @@ function Map({ colorMap, typeTemp, countryId }) {
                 };
             });
             setOptions(() => ({
-                ...initOptions(colorMap, typeTemp),
+                ...initOptions(typeTemp),
                 title: {
                     text: mapData.title,
                 },
                 series: [
                     {
-                        ...initOptions(colorMap, typeTemp).series[0],
+                        ...initOptions(typeTemp).series[0],
                         mapData: mapData,
                         data: fakeData,
                     },
@@ -98,7 +98,7 @@ function Map({ colorMap, typeTemp, countryId }) {
 
             if (!mapLoaded) setMapLoaded(true);
         }
-    }, [mapData, mapLoaded, colorMap, typeTemp]);
+    }, [mapData, mapLoaded, typeTemp]);
 
     useEffect(() => {
         if (chartRef && chartRef.current) {
@@ -121,4 +121,4 @@ function Map({ colorMap, typeTemp, countryId }) {
     );
 }
 
-export default Map;
+export default memo(Map);

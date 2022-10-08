@@ -51,7 +51,7 @@ function App() {
                 {weather && (
                     <>
                         <TimeAndLocaTion weather={weather} />
-                        <Map weather={weather} typeTemp={typeTemp} countryId={weather.country.toLowerCase()} />
+                        <Map typeTemp={typeTemp} countryId={weather.country.toLowerCase()} />
                     </>
                 )}
             </div>
