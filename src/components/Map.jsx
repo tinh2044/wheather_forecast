@@ -7,7 +7,7 @@ import { cloneDeep } from 'lodash';
 
 highchartsMap(Highcharts);
 
-const initOptions = (colorMap) => {
+const initOptions = (colorMap, typeTemp) => {
     return {
         chart: {
             width: '400',
@@ -15,7 +15,11 @@ const initOptions = (colorMap) => {
             backgroundColor: 'transparent',
         },
         title: {
-            text: null,
+            text: `The chart shows the temperature of Vietnam`,
+            style: {
+                color: '#fff',
+                textAlign: 'center',
+            },
         },
         mapNavigation: {
             enabled: true,
@@ -29,16 +33,20 @@ const initOptions = (colorMap) => {
             align: 'right',
             verticalAlign: 'bottom',
         },
+
         series: [
             {
-                name: 'fake data',
+                name: 'fake temperature',
                 joinBy: ['hc-key', 'key'],
             },
         ],
+        tooltip: {
+            valueSuffix: `°${typeTemp}`,
+        },
     };
 };
 
-function Map({ countryId, colorMap }) {
+function Map({ countryId, colorMap, typeTemp, threshold }) {
     const [mapData, setMapData] = useState({});
     const [options, setOptions] = useState({});
     const [mapLoaded, setMapLoaded] = useState(false);
@@ -55,18 +63,27 @@ function Map({ countryId, colorMap }) {
     }, [countryId]);
     useEffect(() => {
         if (mapData && Object.keys(mapData).length) {
-            const fakeData = mapData.features.map((feature, index) => ({
-                key: feature.properties['hc-key'],
-                value: Math.floor(Math.random() * 38) + 2,
-            }));
+            const fakeData = mapData.features.map((feature, index) => {
+                let fakeTemp;
+                if (threshold) {
+                    fakeTemp = Math.floor(Math.random() * 17) + 2;
+                } else {
+                    fakeTemp = Math.floor(Math.random() * 38) + 2;
+                }
+                fakeTemp = typeTemp === 'F' ? fakeTemp * 1.8 + 32 : fakeTemp;
+                return {
+                    key: feature.properties['hc-key'],
+                    value: fakeTemp,
+                };
+            });
             setOptions(() => ({
-                ...initOptions(colorMap),
+                ...initOptions(colorMap, typeTemp),
                 title: {
                     text: mapData.title,
                 },
                 series: [
                     {
-                        ...initOptions(colorMap).series[0],
+                        ...initOptions(colorMap, typeTemp).series[0],
                         mapData: mapData,
                         data: fakeData,
                     },
@@ -75,7 +92,7 @@ function Map({ countryId, colorMap }) {
 
             if (!mapLoaded) setMapLoaded(true);
         }
-    }, [mapData, mapLoaded, colorMap]);
+    }, [mapData, mapLoaded, colorMap, typeTemp]);
 
     useEffect(() => {
         if (chartRef && chartRef.current) {
