@@ -1,5 +1,5 @@
 /* eslint-disable no-lone-blocks */
-import React, { memo } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 const cities = [
     {
         id: 1,
@@ -39,26 +39,40 @@ const cities = [
     },
     {
         id: 10,
-        title: 'Ho Chi Minh',
+        title: 'Bangkok',
+    },
+    {
+        id: 11,
+        title: 'Moscow',
+    },
+    {
+        id: 11,
+        title: 'Hong Kong',
+    },
+    {
+        id: 12,
+        title: 'Chicago',
     },
 ];
-function TopButtons({ setQuery }) {
-    let listCities = (cities) => {
-        let newList = [];
-        let index;
-
-        while (newList.length < 5) {
-            index = Math.floor(Math.random() * cities.length);
-            if (!newList.includes(cities[index])) {
-                newList.push(cities[index]);
+function TopButtons({ setQuery, weather }) {
+    const [listCities, setListCities] = useState(cities.slice(0, 5));
+    useEffect(() => {
+        setListCities((prev) => {
+            let newList = [];
+            let index;
+            while (newList.length < 5) {
+                index = Math.floor(Math.random() * cities.length);
+                if (!newList.includes(cities[index]) && !prev.includes(cities[index])) {
+                    newList.push(cities[index]);
+                }
             }
-        }
-        return newList;
-    };
+            return newList;
+        });
+    }, [weather]);
 
     return (
         <div className="flex items-center justify-around my-3 w-full">
-            {listCities(cities).map((city) => (
+            {listCities.map((city) => (
                 <button
                     onClick={() => setQuery({ q: city.title })}
                     className="text-white text-lg font-medium"

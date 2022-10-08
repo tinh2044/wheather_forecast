@@ -9,7 +9,7 @@ import TimeAndLocaTion from './components/TimeAndLocaTion';
 import TopButtons from './components/TopButtons';
 import getFormattedWeatherData from './services/weatherServices';
 function App() {
-    const [query, setQuery] = useState({ q: 'ha noi' });
+    const [query, setQuery] = useState({ q: 'ho chi minh' });
     const [units, setUnit] = useState('metric');
     const [weather, setWeather] = useState(null);
     let typeTemp = units === 'metric' ? 'C' : 'F';
