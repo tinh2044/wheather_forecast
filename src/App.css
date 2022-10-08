@@ -8,3 +8,6 @@ html {
 .item {
     width: 14%;
 }
+.highcharts-title {
+    display: none;
+}
