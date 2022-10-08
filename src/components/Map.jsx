@@ -4,6 +4,7 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import highchartsMap from 'highcharts/modules/map';
 import { cloneDeep } from 'lodash';
+import { getTemperature } from '../services/weatherServices';
 
 highchartsMap(Highcharts);
 
@@ -26,7 +27,18 @@ const initOptions = (colorMap, typeTemp) => {
         },
         colorAxis: {
             min: 0,
-            stops: colorMap,
+            stops: [
+                [0.1, '#93c5fd'],
+                [0.2, '#60a5fa'],
+                [0.3, '#3b82f6'],
+                [0.4, '#2563eb'],
+                [0.5, '#1d4ed8'],
+                [0.6, '#fdba74'],
+                [0.7, '#fb923c'],
+                [0.8, '#f97316'],
+                [0.9, '#ea580c'],
+                [1, '#c2410c'],
+            ],
         },
         legend: {
             layout: 'vertical',
@@ -46,14 +58,13 @@ const initOptions = (colorMap, typeTemp) => {
     };
 };
 
-function Map({ countryId, colorMap, typeTemp, threshold }) {
+function Map({ colorMap, typeTemp, countryId }) {
     const [mapData, setMapData] = useState({});
     const [options, setOptions] = useState({});
     const [mapLoaded, setMapLoaded] = useState(false);
     const chartRef = useRef(null);
     useEffect(() => {
         if (countryId) {
-            console.log(countryId);
             getMapDataByCountryId(countryId)
                 .then((res) => {
                     setMapData(res);
@@ -64,17 +75,11 @@ function Map({ countryId, colorMap, typeTemp, threshold }) {
     useEffect(() => {
         if (mapData && Object.keys(mapData).length) {
             const fakeData = mapData.features.map((feature, index) => {
-                let fakeTemp;
-                console.log(feature);
-                if (threshold) {
-                    fakeTemp = Math.floor(Math.random() * 17) + 2;
-                } else {
-                    fakeTemp = Math.floor(Math.random() * 38) + 2;
-                }
-                fakeTemp = typeTemp === 'F' ? fakeTemp * 1.8 + 32 : fakeTemp;
+                let temp = Math.floor(Math.random() * 30) + 4;
+                temp = typeTemp === 'F' ? temp * 1.8 + 32 : temp;
                 return {
                     key: feature.properties['hc-key'],
-                    value: fakeTemp,
+                    value: temp,
                 };
             });
             setOptions(() => ({

@@ -12,13 +12,6 @@ function App() {
     const [query, setQuery] = useState({ q: 'ha noi' });
     const [units, setUnit] = useState('metric');
     const [weather, setWeather] = useState(null);
-    let colorMap = [
-        [0.2, '#fdba74'],
-        [0.4, '#fb923c'],
-        [0.6, '#f97316'],
-        [0.8, '#ea580c'],
-        [1, '#c2410c'],
-    ];
     let typeTemp = units === 'metric' ? 'C' : 'F';
     const formatToast = (value) => {
         const listValue = value.split(' ');
@@ -44,34 +37,22 @@ function App() {
     const formatBackground = useCallback(() => {
         if (!weather) return 'from-cyan-700 to-blue-700';
         if (weather.temp <= threshold) {
-            colorMap = [
-                [0.2, '#93c5fd'],
-                [0.4, '#60a5fa'],
-                [0.6, '#3b82f6'],
-                [0.8, '#2563eb'],
-                [1, '#1d4ed8'],
-            ];
             return 'from-cyan-700 to-blue-700';
         }
 
         return 'from-yellow-700 to-orange-700';
-    }, [weather, units, colorMap]);
+    }, [weather, units]);
     return (
         <div
             className={`mx-auto flex flex-row w-full h-screen  justify-between px-10 bg-gradient-to-br from-cyan-700 to-blue-700 shadow-xl shadow-gray-400 ${formatBackground()}`}
         >
             <div className="w-5/12 flex flex-col justify-start items-center">
-                <TopButtons setQuery={setQuery} />
+                <TopButtons setQuery={setQuery} weather={weather} />
                 <Inputs setUnit={setUnit} setQuery={setQuery} />
                 {weather && (
                     <>
                         <TimeAndLocaTion weather={weather} />
-                        <Map
-                            threshold={weather.temp <= threshold}
-                            typeTemp={typeTemp}
-                            colorMap={colorMap}
-                            countryId={weather.country.toLowerCase()}
-                        />
+                        <Map weather={weather} typeTemp={typeTemp} countryId={weather.country.toLowerCase()} />
                     </>
                 )}
             </div>
