@@ -4,6 +4,7 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import highchartsMap from 'highcharts/modules/map';
 import { cloneDeep } from 'lodash';
+import { toast } from 'react-toastify';
 
 highchartsMap(Highcharts);
 
@@ -69,9 +70,12 @@ function Map({ typeTemp, countryId }) {
                 .then((res) => {
                     setMapData(res);
                 })
-                .catch((err) => console.log({ err }));
+                .catch((err) => {
+                    toast.error(err.message);
+                });
         }
     }, [countryId]);
+    // Fake Temperature
     useEffect(() => {
         if (mapData && Object.keys(mapData).length) {
             const fakeData = mapData.features.map((feature) => {
@@ -99,7 +103,7 @@ function Map({ typeTemp, countryId }) {
             if (!mapLoaded) setMapLoaded(true);
         }
     }, [mapData, mapLoaded, typeTemp]);
-
+    // Rerender Map
     useEffect(() => {
         if (chartRef && chartRef.current) {
             chartRef.current.chart.series[0].update({

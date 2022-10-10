@@ -12,7 +12,7 @@ const getWeatherData = async (infoType, searchParams) => {
     if (response.ok) {
         data = response.json();
     } else {
-        toast.error('Please change city name');
+        toast.error('Please change city name or enter by english');
     }
 
     return data;
@@ -70,7 +70,9 @@ const formatForecastWeather = (data) => {
 };
 
 const getFormattedWeatherData = async (searchParams) => {
-    const formattedCurrentWeather = await getWeatherData('weather', searchParams).then(formatCurrentWeather);
+    const formattedCurrentWeather = await getWeatherData('weather', searchParams).then(
+        formatCurrentWeather,
+    );
 
     const { lat, lon } = formattedCurrentWeather;
     const formattedForecastWeather = await getWeatherData('onecall', {

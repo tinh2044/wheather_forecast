@@ -12,6 +12,7 @@ function App() {
     const [query, setQuery] = useState({ q: 'ho chi minh' });
     const [units, setUnit] = useState('metric');
     const [weather, setWeather] = useState(null);
+    // Set Temperature
     let typeTemp = units === 'metric' ? 'C' : 'F';
     const formatToast = (value) => {
         const listValue = value.split(' ');
@@ -20,6 +21,7 @@ function App() {
             return acc;
         }, '');
     };
+    // Call Api
     useEffect(() => {
         const fetchWeather = async () => {
             const message = query.q ? formatToast(query.q) : 'current location.';
@@ -31,22 +33,24 @@ function App() {
         fetchWeather();
     }, [query, units]);
 
-    const threshold = units === 'metric' ? 20 : 60;
-
+    // Set Background
     const formatBackground = useCallback(() => {
+        const threshold = units === 'metric' ? 20 : 60;
+
         if (!weather) return 'from-cyan-700 to-blue-700';
         if (weather.temp <= threshold) {
             return 'from-cyan-700 to-blue-700';
         }
 
         return 'from-yellow-700 to-orange-700';
-    }, [weather, threshold]);
+    }, [weather, units]);
     return (
         <div
-            className={`mx-auto flex flex-row w-full h-screen  justify-between px-10 bg-gradient-to-br from-cyan-700 to-blue-700 shadow-xl shadow-gray-400 ${formatBackground()}`}
+            className={`mx-auto flex flex-row w-full h-screen  justify-between px-5 bg-gradient-to-br from-cyan-700 to-blue-700 shadow-xl shadow-gray-400 ${formatBackground()}`}
         >
             <div className="w-5/12 flex flex-col justify-start items-center">
                 <TopButtons setQuery={setQuery} weather={weather} />
+                {/* Search City Or Country */}
                 <Inputs setUnit={setUnit} setQuery={setQuery} />
                 {weather && (
                     <>
@@ -59,8 +63,16 @@ function App() {
                 {weather && (
                     <>
                         <TemperatureAndDetails typeTemp={typeTemp} weather={weather} />
-                        <Forecast typeTemp={typeTemp} items={weather.hourly} title={'hourly forecast'} />
-                        <Forecast typeTemp={typeTemp} items={weather.daily} title={'daily forecast'} />
+                        <Forecast
+                            typeTemp={typeTemp}
+                            items={weather.hourly}
+                            title={'hourly forecast'}
+                        />
+                        <Forecast
+                            typeTemp={typeTemp}
+                            items={weather.daily}
+                            title={'daily forecast'}
+                        />
                     </>
                 )}
             </div>
