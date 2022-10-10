@@ -61,8 +61,10 @@ const allCityAndCountryApi = async () => {
         'Tuyen Quang (Vietnam)',
         'Vinh Long (Vietnam)',
         'Vinh Phuc (Vietnam)',
+        'Vinh(Vietnam)',
         'Yen Bai (Vietnam)',
     ];
+    console.log(cityInVN.length);
     const allCities = await fetch(
         'https://raw.githubusercontent.com/dr5hn/countries-states-cities-database/master/states.json',
     )
