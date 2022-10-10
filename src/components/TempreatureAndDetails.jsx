@@ -84,11 +84,7 @@ function TemperatureAndDetails({
                     <p className="font-light">
                         Hide:{' '}
                         <span className="font-medium">
-                            <CountUp
-                                end={speed.toFixed(temp_max.toFixed())}
-                                separator=" "
-                                duration={1.5}
-                            />
+                            <CountUp end={temp_max.toFixed()} separator=" " duration={1.5} />
                             {`°${typeTemp}`}
                         </span>
                     </p>
@@ -99,11 +95,7 @@ function TemperatureAndDetails({
                     <p className="font-light">
                         Low:{' '}
                         <span className="font-medium">
-                            <CountUp
-                                end={speed.toFixed(temp_min.toFixed())}
-                                separator=" "
-                                duration={1.5}
-                            />
+                            <CountUp end={temp_min.toFixed()} separator=" " duration={1.5} />
                             {`°${typeTemp}`}
                         </span>
                     </p>

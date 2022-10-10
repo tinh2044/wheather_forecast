@@ -44,7 +44,7 @@ function Inputs({ setQuery, setUnit }) {
                         ref={inputRef}
                         type="text"
                         placeholder="Search country or city..."
-                        className="text-xl font-light p-2 w-full shadow-xl  focus:outline-none rounded
+                        className="text-xl font-light p-2 w-full shadow-xl  focus:outline-none rounded capitalize
             "
                         onChange={(e) => setValueInput(e.target.value)}
                     />

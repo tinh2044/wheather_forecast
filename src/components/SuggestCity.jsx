@@ -35,12 +35,21 @@ function SuggestCity({ value, handleSearch }) {
             setSuggestCity([]);
         }
     }, [value]);
+    const handleClick = (city) => {
+        if (city.includes('(')) {
+            const newCity = city.slice(0, city.indexOf('(') - 1);
+            // console.log(newCity);
+            handleSearch(newCity);
+        } else {
+            handleSearch(city);
+        }
+    };
     return (
         <div className="absolute w-full shadow-orange-50 rounded  max-h-56 bg-white z-10 top-full mt-1 left-0 space-x-0 overflow-y-auto transition">
             {suggestCity.map((city, index) => (
                 <p
                     key={index}
-                    onClick={(e) => handleSearch(city)}
+                    onClick={(e) => handleClick(city)}
                     className=" w-full  text-base text-gray-500 px-4 py-2 border-solid border-t-2 cursor-pointer border-stone-300 transition ease-in-out hover:opacity-80 hover:bg-slate-200"
                 >
                     {city}
