@@ -61,7 +61,7 @@ const allCityAndCountryApi = async () => {
         'Tuyen Quang (Vietnam)',
         'Vinh Long (Vietnam)',
         'Vinh Phuc (Vietnam)',
-        'Vinh(Vietnam)',
+        'Vinh (Vietnam)',
         'Yen Bai (Vietnam)',
     ];
     console.log(cityInVN.length);
