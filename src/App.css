@@ -16,6 +16,10 @@ html::-webkit-scrollbar {
     display: none;
 }
 
-.highcharts-credits {
-    display: none;
+.suggest::-webkit-scrollbar {
+    width: 6px;
+}
+.suggest::-webkit-scrollbar-thumb {
+    background-color: #dbd6d6;
+    border-radius: 6px;
 }

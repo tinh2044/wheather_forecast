@@ -45,7 +45,7 @@ function SuggestCity({ value, handleSearch }) {
         }
     };
     return (
-        <div className="absolute w-full shadow-orange-50 rounded  max-h-56 bg-white z-10 top-full mt-1 left-0 space-x-0 overflow-y-auto transition">
+        <div className="suggest absolute w-full shadow-orange-50 rounded  max-h-56 bg-white z-10 top-full mt-1 left-0 space-x-0 overflow-y-auto transition">
             {suggestCity.map((city, index) => (
                 <p
                     key={index}
