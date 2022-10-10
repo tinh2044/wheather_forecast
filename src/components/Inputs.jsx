@@ -47,6 +47,7 @@ function Inputs({ setQuery, setUnit }) {
                         className="text-xl font-light p-2 w-full shadow-xl  focus:outline-none rounded capitalize
             "
                         onChange={(e) => setValueInput(e.target.value)}
+                        onBlur={() => setValueInput('')}
                     />
                     <SuggestCity value={valueInput} handleSearch={handleSearch} />
                 </div>
