@@ -3,15 +3,15 @@ import { UilSearch, UilLocationPoint } from '@iconscout/react-unicons';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import SuggestCity from './SuggestCity';
-function Inputs({ setQuery, setUnit }) {
+function Inputs({ setQuery, setUnit, setWeather }) {
     const inputRef = useRef();
     const [valueInput, setValueInput] = useState('');
     const handleSearch = (value) => {
         if (value !== '') {
             setQuery({ q: value });
-
             setValueInput('');
             inputRef.current.focus();
+            setWeather(null);
         }
     };
     // Search When Enter

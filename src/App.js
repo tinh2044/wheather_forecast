@@ -49,15 +49,24 @@ function App() {
             className={`mx-auto flex flex-row w-full h-screen  justify-between px-5 bg-gradient-to-br from-cyan-700 to-blue-700 shadow-xl shadow-gray-400 ${formatBackground()}`}
         >
             <div className="w-5/12 flex flex-col justify-start items-center">
-                <TopButtons setQuery={setQuery} weather={weather} />
+                <TopButtons setQuery={setQuery} weather={weather} setWeather={setWeather} />
                 {/* Search City Or Country */}
-                <Inputs setUnit={setUnit} setQuery={setQuery} />
+                <Inputs setUnit={setUnit} setQuery={setQuery} setWeather={setWeather} />
                 {weather && (
                     <>
                         <TimeAndLocaTion weather={weather} />
-                        <Map typeTemp={typeTemp} countryId={weather.country.toLowerCase()} />
                     </>
                 )}
+                <div
+                    style={{
+                        opacity: weather ? 1 : 0,
+                    }}
+                >
+                    <Map
+                        typeTemp={typeTemp}
+                        countryId={weather ? weather.country.toLowerCase() : ''}
+                    />
+                </div>
             </div>
             <div className="w-6/12">
                 {weather && (
