@@ -10,6 +10,7 @@ import TopButtons from './components/TopButtons';
 import getFormattedWeatherData from './services/weatherServices';
 function App() {
     const [query, setQuery] = useState({ q: 'ho chi minh' });
+    // console.log(navigator.geolocation);
     const [units, setUnit] = useState('metric');
     const [weather, setWeather] = useState(null);
     // Set Temperature
