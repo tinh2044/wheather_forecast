@@ -81,7 +81,7 @@ function TopButtons({ setQuery, weather }) {
             {listCities.map((city) => (
                 <button
                     onClick={() => setQuery({ q: city.title })}
-                    className="text-white text-lg font-medium transition ease-in hover:scale-125"
+                    className="text-white text-sm lg:text-lg w-1/4  text-center font-medium transition ease-in hover:scale-125"
                     key={city.id}
                 >
                     {city.title}

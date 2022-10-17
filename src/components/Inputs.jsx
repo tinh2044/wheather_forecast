@@ -37,14 +37,14 @@ function Inputs({ setQuery, setUnit, setWeather }) {
     };
     return (
         <div className="flex flex-row justify-between mt-3 w-full">
-            <div className="flex flex-row w-10/12 items-center justify-center ">
+            <div className="flex flex-row w-9/12 lg:w-10/12  items-center justify-center ">
                 <div className="w-9/12 relative">
                     <input
                         value={valueInput}
                         ref={inputRef}
                         type="text"
                         placeholder="Search country or city..."
-                        className="text-xl font-light p-2 w-full shadow-xl  focus:outline-none rounded capitalize
+                        className=" text-sm lg:text-xl font-light p-2 w-full shadow-xl  focus:outline-none rounded capitalize
             "
                         onChange={(e) => setValueInput(e.target.value)}
                         onBlur={() => setValueInput('')}
@@ -64,7 +64,7 @@ function Inputs({ setQuery, setUnit, setWeather }) {
                     />
                 </div>
             </div>
-            <div className=" flex flex-row w-2/12 items-center justify-end">
+            <div className=" flex flex-row w-3/12 lg:w-2/12 items-center justify-end">
                 <button
                     onClick={(e) => setUnit(e.target.name)}
                     className="text-xl text-white font-light transition ease-out hover:scale-125"
