@@ -10,7 +10,6 @@ import TopButtons from './components/TopButtons';
 import getFormattedWeatherData from './services/weatherServices';
 function App() {
     const [query, setQuery] = useState({ q: 'ho chi minh' });
-    // console.log(navigator.geolocation);
     const [units, setUnit] = useState('metric');
     const [weather, setWeather] = useState(null);
     // Set Temperature
@@ -33,7 +32,6 @@ function App() {
         };
         fetchWeather();
     }, [query, units]);
-
     // Set Background
     const formatBackground = useCallback(() => {
         const threshold = units === 'metric' ? 20 : 60;
@@ -47,9 +45,9 @@ function App() {
     }, [weather, units]);
     return (
         <div
-            className={`mx-auto flex flex-row w-full h-screen  justify-between px-5 bg-gradient-to-br from-cyan-700 to-blue-700 shadow-xl shadow-gray-400 ${formatBackground()}`}
+            className={`flex flex-col lg:flex-row w-full h-screen lg:justify-between sm:items-center lg:items-start overflow-x-hidden overflow-y-scroll lg:overflow-hidden mx-auto  px-5 bg-gradient-to-br from-cyan-700 to-blue-700 shadow-xl shadow-gray-400 ${formatBackground()} `}
         >
-            <div className="w-5/12 flex flex-col justify-start items-center">
+            <div className="w-full lg:w-5/12 sm:w-10/12 flex flex-col justify-center items-center">
                 <TopButtons setQuery={setQuery} weather={weather} setWeather={setWeather} />
                 {/* Search City Or Country */}
                 <Inputs setUnit={setUnit} setQuery={setQuery} setWeather={setWeather} />
@@ -65,14 +63,14 @@ function App() {
                 >
                     <Map
                         typeTemp={typeTemp}
-                        countryId={weather ? weather.country.toLowerCase() : ''}
+                        countryId={weather ? weather.country.toLowerCase() : 'vn'}
                     />
                 </div>
             </div>
-            <div className="w-6/12">
+            <div className="w-full lg:w-6/12 sm:w-10/12">
                 {weather && (
                     <>
-                        <TemperatureAndDetails typeTemp={typeTemp} weather={weather} />
+                        <TemperatureAndDetails typeTemp={typeTemp} weather={weather || {}} />
                         <Forecast
                             typeTemp={typeTemp}
                             items={weather.hourly}
@@ -86,7 +84,12 @@ function App() {
                     </>
                 )}
             </div>
-            <ToastContainer autoClose={2800} theme="colored" newestOnTop={true} />
+            <ToastContainer
+                autoClose={2800}
+                theme="colored"
+                // toastClassName="lg:w-60 w-28"
+                newestOnTop={true}
+            />
         </div>
     );
 }

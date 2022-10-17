@@ -69,7 +69,6 @@ function TopButtons({ setQuery, weather }) {
             while (newList.length < 5) {
                 index = Math.floor(Math.random() * cities.length);
                 if (!newList.includes(cities[index]) && !prev.includes(cities[index])) {
-                    // console.log(newList);
                     newList.push(cities[index]);
                 }
             }
@@ -78,7 +77,7 @@ function TopButtons({ setQuery, weather }) {
     }, [weather]);
 
     return (
-        <div className="flex items-center justify-around my-3 w-full">
+        <div className="flex items-center justify-between my-3 w-full">
             {listCities.map((city) => (
                 <button
                     onClick={() => setQuery({ q: city.title })}

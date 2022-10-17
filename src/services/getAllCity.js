@@ -1,3 +1,8 @@
+import axios from 'axios';
+
+const place = axios.create({
+    baseURL: 'https://raw.githubusercontent.com/dr5hn/countries-states-cities-database/master',
+});
 const allCityAndCountryApi = async () => {
     const cityInVN = [
         'An Giang (Vietnam)',
@@ -64,21 +69,14 @@ const allCityAndCountryApi = async () => {
         'Vinh (Vietnam)',
         'Yen Bai (Vietnam)',
     ];
-    const allCities = await fetch(
-        'https://raw.githubusercontent.com/dr5hn/countries-states-cities-database/master/states.json',
-    )
-        .then((res) => res.json())
-        .then((res) =>
-            res
-                .filter((data) => data.country_code !== 'VN')
-                .map((data) => `${data.name} (${data.country_name})`),
-        );
-
-    const allCountries = await fetch(
-        'https://raw.githubusercontent.com/dr5hn/countries-states-cities-database/master/countries.json',
-    )
-        .then((res) => res.json())
-        .then((res) => res.map((data) => data.name));
+    let allCities = await place.get('states.json').then((res) => res.data);
+    // Format Cities
+    allCities = allCities
+        .filter((data) => data.country_code !== 'VN')
+        .map((data) => `${data.name} (${data.country_name})`);
+    let allCountries = await place.get('countries.json').then((res) => res.data);
+    // Format Country
+    allCountries = allCountries.map((country) => country.name);
     return [...cityInVN, ...allCountries, ...allCities];
 };
 

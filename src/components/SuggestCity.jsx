@@ -38,7 +38,6 @@ function SuggestCity({ value, handleSearch }) {
     const handleClick = (city) => {
         if (city.includes('(')) {
             const newCity = city.slice(0, city.indexOf('(') - 1);
-            console.log(newCity);
             handleSearch(newCity);
         } else {
             handleSearch(city);

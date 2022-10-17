@@ -21,7 +21,7 @@ function Forecast({ title, items, typeTemp }) {
                 {items.map((item, index) => (
                     <div
                         key={index}
-                        className="flex flex-col items-center justify-center item flex-shrink-0"
+                        className="flex flex-col w-3/12 lg:w-2/12 items-center justify-center flex-shrink-0"
                     >
                         <p className="font-light text-sm">{item.title}</p>
                         <img src={iconUrlFromCode(item.icon)} alt="" className="w-12 my-1" />

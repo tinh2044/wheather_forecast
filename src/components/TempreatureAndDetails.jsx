@@ -21,11 +21,17 @@ function TemperatureAndDetails({
     return (
         <div>
             <div className={`flex items-center justify-center  my-3  text-xl  font-light`}>
-                <p className={`${temp < 20 ? 'text-cyan-300' : 'text-yellow-100'}`}>{details}</p>
+                <p
+                    className={`${
+                        temp < 20 ? 'text-cyan-300' : 'text-yellow-100'
+                    } text-center w-3/12`}
+                >
+                    {details}
+                </p>
             </div>
             <div className="flex flex-row items-center justify-between text-white">
-                <img src={iconUrlFromCode(icon)} alt="" className="w-32" />
-                <p className="text-5xl">
+                <img src={iconUrlFromCode(icon)} alt="" className="lg:w-32 w-3/12" />
+                <p className=" lg:text-5xl text-4xl text-center w-3/12">
                     <CountUp end={temp.toFixed()} separator=" " duration={1.5} />
                     {`°${typeTemp}`}
                 </p>
@@ -58,8 +64,8 @@ function TemperatureAndDetails({
                 </div>
             </div>
 
-            <div className="flex flex-row items-center justify-center space-y-2 text-white text-sm py-3">
-                <div className="flex flex-row items-center mt-2">
+            <div className="flex flex-row flex-wrap items-center justify-center space-y-2 text-white text-sm py-3">
+                <div className="w-6/12 lg:w-3/12 flex flex-row items-center justify-center mt-2">
                     <UilSun />
                     <p className="font-light">
                         Rise:{' '}
@@ -67,9 +73,9 @@ function TemperatureAndDetails({
                             {formatToLocalTime(sunrise, timezone, 'hh:mm a')}
                         </span>
                     </p>
-                    <p className=" mx-2 font-light">|</p>
+                    <p className=" mx-2 font-light hidden lg:inline">|</p>
                 </div>
-                <div className="flex flex-row items-center">
+                <div className="w-6/12 lg:w-3/12 flex flex-row justify-center items-center">
                     <UilSunset />
                     <p className="font-light">
                         Set:{' '}
@@ -77,9 +83,9 @@ function TemperatureAndDetails({
                             {formatToLocalTime(sunset, timezone, 'hh:mm a')}
                         </span>
                     </p>
-                    <p className=" mx-2 font-light">|</p>
+                    <p className=" mx-2 font-light  hidden lg:inline">|</p>
                 </div>
-                <div className="flex flex-row items-center">
+                <div className="w-6/12 lg:w-3/12 flex  flex-row items-center justify-center">
                     <UilSun />
                     <p className="font-light">
                         Hide:{' '}
@@ -88,9 +94,9 @@ function TemperatureAndDetails({
                             {`°${typeTemp}`}
                         </span>
                     </p>
-                    <p className=" mx-2 font-light">|</p>
+                    <p className=" mx-2 font-light  hidden lg:inline">|</p>
                 </div>
-                <div className="flex flex-row items-center">
+                <div className="w-6/12 lg:w-3/12 flex flex-row items-center justify-center">
                     <UilSun />
                     <p className="font-light">
                         Low:{' '}

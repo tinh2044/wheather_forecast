@@ -1,16 +1,20 @@
 import { DateTime } from 'luxon';
 import { toast } from 'react-toastify';
-
+import axios from 'axios';
 const API_KEY = 'cf26e7b2c25b5acd18ed5c3e836fb235';
 const BASE_URL = 'https://api.openweathermap.org/data/2.5/';
-
+const weather = axios.create({
+    baseURL: BASE_URL,
+});
 const getWeatherData = async (infoType, searchParams) => {
-    const url = new URL(BASE_URL + infoType);
-    url.search = new URLSearchParams({ ...searchParams, appid: API_KEY });
-    let response = await fetch(url);
+    const params = {
+        ...searchParams,
+        appid: API_KEY,
+    };
+    let response = await weather.get(infoType, { params });
     let data;
-    if (response.ok) {
-        data = response.json();
+    if (response.status === 200) {
+        data = response.data;
     } else {
         toast.error('Please change city name or enter by english');
     }
@@ -49,7 +53,6 @@ const formatCurrentWeather = (data) => {
 };
 
 const formatForecastWeather = (data) => {
-    // console.log(data);
     let { timezone, daily, hourly } = data;
     daily = daily.slice(0, daily.length - 1).map((d) => {
         return {
