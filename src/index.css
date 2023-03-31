@@ -9,3 +9,13 @@
         font-family: 'Poppins', sans-serif;
     }
 }
+
+*::-webkit-scrollbar {
+    display: none;
+}
+text[x='200'] {
+    display: none;
+}
+.highcharts-container {
+    margin-top: -40px;
+}

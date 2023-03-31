@@ -1,3 +1,5 @@
+import { ICIty } from './../../typing';
+import { ICountry } from './../../.history/typing_20230331005438';
 import axios from 'axios';
 
 const place = axios.create({
@@ -69,15 +71,16 @@ const allCityAndCountryApi = async () => {
         'Vinh (Vietnam)',
         'Yen Bai (Vietnam)',
     ];
-    let allCities = await place.get('states.json').then((res) => res.data);
+    let allCities = await place.get<ICountry[]>('states.json').then((res) => res.data);
     // Format Cities
-    allCities = allCities
-        .filter((data) => data.country_code !== 'VN')
-        .map((data) => `${data.name} (${data.country_name})`);
-    let allCountries = await place.get('countries.json').then((res) => res.data);
+    allCities = allCities.filter((data: ICountry) => data.country_code !== 'VN');
+
+    let nameAllCities: string[] = allCities.map((data) => `${data.name} (${data.country_name})`);
+
+    let allCountries = await place.get<ICIty[]>('countries.json').then((res) => res.data);
     // Format Country
-    allCountries = allCountries.map((country) => country.name);
-    return [...cityInVN, ...allCountries, ...allCities];
+    let nameAllCountries: string[] = allCountries.map((country) => country.name);
+    return [...cityInVN, ...nameAllCountries, ...nameAllCities];
 };
 
 export default allCityAndCountryApi;

@@ -1,16 +1,33 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { UilSearch, UilLocationPoint } from '@iconscout/react-unicons';
+import React, { useRef, useState } from 'react';
+
+import { AiOutlineSearch } from 'react-icons/ai';
+import { TfiLocationPin } from 'react-icons/tfi';
+
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
+
 import SuggestCity from './SuggestCity';
-function Inputs({ setQuery, setUnit, setWeather }) {
-    const inputRef = useRef();
-    const [valueInput, setValueInput] = useState('');
-    const handleSearch = (value) => {
+import { IWeatherData } from '../../typing';
+import { IQuery } from '../App';
+
+interface IProps {
+    setQuery: React.Dispatch<React.SetStateAction<IQuery>>;
+
+    setUnit: React.Dispatch<React.SetStateAction<string>>;
+
+    setWeather: React.Dispatch<React.SetStateAction<IWeatherData | null | undefined>>;
+}
+
+function Inputs({ setQuery, setUnit, setWeather }: IProps) {
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    const [valueInput, setValueInput] = useState<string>('');
+
+    const handleSearch = (value: string) => {
         if (value !== '') {
             setQuery({ q: value });
             setValueInput('');
-            inputRef.current.focus();
+            inputRef?.current?.focus();
             setWeather(null);
         }
     };
@@ -52,12 +69,13 @@ function Inputs({ setQuery, setUnit, setWeather }) {
                     <SuggestCity value={valueInput} handleSearch={handleSearch} />
                 </div>
                 <div className="w-3/12 flex items-center justify-start">
-                    <UilSearch
+                    <AiOutlineSearch
                         onClick={() => handleSearch(valueInput)}
                         size={25}
                         className="text-white mx-3 cursor-pointer transition ease-out hover:scale-125"
                     />
-                    <UilLocationPoint
+                    <TfiLocationPin
+                        color="#fff"
                         onClick={handleLocationClick}
                         size={25}
                         className="text-white cursor-pointer transition ease-out hover:scale-125"

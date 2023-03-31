@@ -1,7 +1,8 @@
 import React from 'react';
+import { IWeatherData } from '../../typing';
 import { formatToLocalTime } from '../services/weatherServices';
 
-function TimeAndLocaTion({ weather: { dt, timezone, name, country } }) {
+function TimeAndLocaTion({ weather: { dt, timezone, name, country } }: { weather: IWeatherData }) {
     return (
         <div className="flex flex-col items-center justify-start w-full">
             <div className="flex flex-row items-center justify-center w-full my-2 lg:mr-10 mr-0">

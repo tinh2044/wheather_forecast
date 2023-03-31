@@ -1,21 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import llCityAndCountryApi from '../services/getAllCity';
+import allCityAndCountryApi from '../services/getAllCity';
 
-function SuggestCity({ value, handleSearch }) {
-    const [allCity, setAllCity] = useState([]);
-    const [suggestCity, setSuggestCity] = useState([]);
+interface IProps {
+    value: string;
+    handleSearch: (value: string) => void;
+}
+
+function SuggestCity({ value, handleSearch }: IProps) {
+    const [allCity, setAllCity] = useState<string[]>([]);
+    const [suggestCity, setSuggestCity] = useState<string[]>([]);
     // Get All Country and City
     useEffect(() => {
         const getAllCity = async () => {
-            const allCity = await llCityAndCountryApi();
+            const allCity = await allCityAndCountryApi();
             setAllCity(allCity);
         };
         getAllCity();
     }, []);
+
     // Suggest Country And City
     useEffect(() => {
         if (value) {
-            const formatValue = (value) => {
+            const formatValue = (value: string) => {
                 if (value.includes(' ')) {
                     const listValue = value.split(' ').filter((value) => value);
                     return listValue.reduce((acc, value) => {
@@ -34,8 +40,8 @@ function SuggestCity({ value, handleSearch }) {
         } else {
             setSuggestCity([]);
         }
-    }, [value]);
-    const handleClick = (city) => {
+    }, [allCity, value]);
+    const handleClick = (city: string) => {
         if (city.includes('(')) {
             const newCity = city.slice(0, city.indexOf('(') - 1);
             handleSearch(newCity);

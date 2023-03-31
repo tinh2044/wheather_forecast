@@ -3,12 +3,15 @@ import { getMapDataByCountryId } from '../services/getMapByCountyId';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import highchartsMap from 'highcharts/modules/map';
-import { cloneDeep } from 'lodash';
+// import { cloneDeep } from 'lodash';
+import { clone } from 'ramda';
 import { toast } from 'react-toastify';
+
+import { IQuery } from '../App';
 
 highchartsMap(Highcharts);
 
-const initOptions = (typeTemp) => {
+const initOptions = (typeTemp: string) => {
     return {
         chart: {
             width: '400',
@@ -59,11 +62,19 @@ const initOptions = (typeTemp) => {
     };
 };
 
-function Map({ typeTemp, countryId }) {
-    const [mapData, setMapData] = useState({});
+interface IProps {
+    typeTemp: string;
+    countryId: string;
+    handleSearch: React.Dispatch<React.SetStateAction<IQuery>>;
+}
+
+function Map({ typeTemp, countryId, handleSearch }: IProps) {
+    const [mapData, setMapData] = useState<
+        Highcharts.GeoJSON | Highcharts.SeriesMapDataOptions[] | undefined
+    >();
     const [options, setOptions] = useState({});
     const [mapLoaded, setMapLoaded] = useState(false);
-    const chartRef = useRef(null);
+    const chartRef = useRef<HighchartsReact.RefObject>(null);
     useEffect(() => {
         if (countryId) {
             getMapDataByCountryId(countryId)
@@ -77,28 +88,31 @@ function Map({ typeTemp, countryId }) {
     }, [countryId]);
     // Fake Temperature
     useEffect(() => {
+        console.log(mapData);
         if (mapData && Object.keys(mapData).length) {
-            const fakeData = mapData.features.map((feature) => {
-                let temp = Math.floor(Math.random() * 30) + 4;
-                temp = typeTemp === 'F' ? temp * 1.8 + 32 : temp;
-                return {
-                    key: feature.properties['hc-key'],
-                    value: temp,
-                };
-            });
-            setOptions(() => ({
-                ...initOptions(typeTemp),
-                title: {
-                    text: mapData.title,
-                },
-                series: [
-                    {
-                        ...initOptions(typeTemp).series[0],
-                        mapData: mapData,
-                        data: fakeData,
+            if ('features' in mapData) {
+                const fakeData = mapData.features.map((feature: any) => {
+                    let temp = Math.floor(Math.random() * 30) + 4;
+                    temp = typeTemp === 'F' ? temp * 1.8 + 32 : temp;
+                    return {
+                        key: feature.properties['hc-key'],
+                        value: temp,
+                    };
+                });
+                setOptions(() => ({
+                    ...initOptions(typeTemp),
+                    title: {
+                        text: mapData.title,
                     },
-                ],
-            }));
+                    series: [
+                        {
+                            ...initOptions(typeTemp).series[0],
+                            mapData: mapData,
+                            data: fakeData,
+                        },
+                    ],
+                }));
+            }
 
             if (!mapLoaded) setMapLoaded(true);
         }
@@ -108,16 +122,26 @@ function Map({ typeTemp, countryId }) {
         if (chartRef && chartRef.current) {
             chartRef.current.chart.series[0].update({
                 mapData,
+                type: 'map',
             });
         }
     }, [options, mapData]);
 
+    const handleClickMap = (name: string) => {
+        handleSearch({ q: name });
+    };
+
     if (!mapLoaded) return null;
     return (
-        <div className="px-5">
+        <div
+            className="px-5 mt-3"
+            onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
+                handleClickMap(e?.nativeEvent?.point?.name)
+            }
+        >
             <HighchartsReact
                 highcharts={Highcharts}
-                options={cloneDeep(options)}
+                options={clone(options)}
                 constructorType={'mapChart'}
                 ref={chartRef}
             />

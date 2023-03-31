@@ -1,5 +1,7 @@
 /* eslint-disable no-lone-blocks */
 import React, { memo, useEffect, useState } from 'react';
+import { IWeatherData } from '../../typing';
+import { IQuery } from '../App';
 const cities = [
     {
         id: 1,
@@ -58,13 +60,21 @@ const cities = [
         title: 'Canberra',
     },
 ];
-function TopButtons({ setQuery, weather }) {
-    const [listCities, setListCities] = useState(cities.slice(0, 4));
+
+interface IProps {
+    weather: IWeatherData | null | undefined;
+    setQuery: React.Dispatch<React.SetStateAction<IQuery>>;
+}
+
+function TopButtons({ setQuery, weather }: IProps) {
+    const [listCities, setListCities] = useState<{ id: number; title: string }[]>(
+        cities.slice(0, 4),
+    );
 
     // Random City
     useEffect(() => {
         setListCities((prev) => {
-            let newList = [];
+            let newList: { id: number; title: string }[] = [];
             let index;
             while (newList.length < 5) {
                 index = Math.floor(Math.random() * cities.length);
@@ -77,7 +87,7 @@ function TopButtons({ setQuery, weather }) {
     }, [weather]);
 
     return (
-        <div className="flex items-center justify-between my-3 w-full">
+        <div className="flex items-center justify-between my-1 w-full">
             {listCities.map((city) => (
                 <button
                     onClick={() => setQuery({ q: city.title })}
